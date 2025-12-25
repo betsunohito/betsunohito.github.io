@@ -4,188 +4,514 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tarkan Kaya – Portföy</title>
-  <meta name="description" content="Tarkan Kaya'nın portföyü: projeler, yetenekler, iletişim." />
+  <meta name="description"
+    content="Tarkan Kaya — Yazılım Geliştirici. Sade, verimli ve gerçek ihtiyaçlara odaklı yazılımlar." />
+  <title>Tarkan Kaya — Portföy</title>
   <link rel="stylesheet" href="styles.css">
-
 </head>
 
 <body>
-  <header>
-    <div class="container nav">
-      <a class="brand" href="#top">
-        <span class="mark" aria-hidden="true"></span>
-        <strong>Tarkan Kaya</strong>
-      </a>
+  <main class="wrap">
+    <header>
+      <!-- Fotoğraf dosyasını index.html ile aynı klasöre koy: profile.jpg -->
+      <img src="img/profile.jpg" alt="Tarkan Kaya profil fotoğrafı" class="profile" loading="lazy" />
 
-  <nav class="nav-links" aria-label="Birincil">
-        <a href="#projects">Projeler</a>
-        <a href="#skills">Yetenekler</a>
-        <a href="#experience">Deneyim</a>
-        <a href="#contact">İletişim</a>
-      </nav>
-    </div>
-  </header>
+      <div>
+        <h1 class="title">Tarkan Kaya — Yazılım Geliştirici</h1>
 
-  <main class="container" id="top">
-    <!-- HERO -->
-    <section class="hero" aria-label="Intro">
-      <div class="card">
-        <h1>Backend Mühendisi — PHP &amp; API'ler</h1>
-        <p>
-          Performans, sürdürülebilir mimari ve güvenilir veri erişimine odaklanarak sağlam backend sistemleri tasarlar ve üretirim.
-          Ürün odaklı problemleri uçtan uca çözmeyi severim: veritabanı tasarımı → API tasarımı → üretim servisleri.
-        </p>
-
-        <p class="muted" style="margin-top:8px;">Uzmanlık: PHP · MySQL · REST API'ler · Performans Optimizasyonu · Test</p>
-
-        <!-- Small stats to make the hero card feel more substantial -->
-        <div class="stats" aria-hidden="true">
-          <span class="stat"><strong>3+</strong> yıl deneyim</span>
-          <span class="stat"><strong>10+</strong> proje</span>
-          <span class="stat"><strong>Prod</strong> hazır servisler</span>
-        </div>
-
-        <!-- Short highlights / value props -->
-        <ul class="hero-list">
-          <li>Performans odaklı API tasarımı ve ölçüm</li>
-          <li>Veritabanı optimizasyonu ve güvenilir veri akışı</li>
-        </ul>
-
-        <div class="actions">
-          <a class="btn primary" href="#projects">Projeleri Gör</a>
-          <a class="btn" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
-          <a class="btn" href="#contact">İletişim</a>
+        <!-- İletişim (üstte) -->
+        <div class="contact-top" role="navigation" aria-label="İletişim">
+          <a href="https://github.com/tarkankaya" target="_blank" rel="noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.13 0 0 .67-.22 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.11.16 1.93.08 2.13.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38C13.71 14.53 16 11.54 16 8c0-4.42-3.58-8-8-8z"/></svg>
+            <span>GitHub</span>
+          </a>
+          <span class="sep" aria-hidden="true">·</span>
+          <a href="https://www.linkedin.com/in/tarkan-kaya" target="_blank" rel="noreferrer">
+            <svg class="icon icon-linkedin" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8.98h5v15H0v-15zM8.5 8.98h4.8v2.05h.07c.67-1.27 2.3-2.6 4.73-2.6 5.06 0 6 3.33 6 7.66v8.89h-5V17.4c0-2.04-.04-4.66-2.84-4.66-2.85 0-3.28 2.22-3.28 4.51v7.19h-5v-15z"/></svg>
+            <span>LinkedIn</span>
+          </a>
+          <span class="sep" aria-hidden="true">·</span>
+          <a href="mailto:kayatarkan96@gmail.com">
+            <svg class="icon icon-mail" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            <span>kayatarkan96@gmail.com</span>
+          </a>
         </div>
       </div>
+    </header>
 
-      <aside class="card" aria-label="Kısa Bilgi">
-        <h2 style="margin-top:0;">Kısa Bilgiler</h2>
-        <div class="list">
-          <div class="row">
-            <div>
-              <b>Konum</b><br />
-              <small>İstanbul, Türkiye · Uzaktan</small>
+
+
+    <div class="columns">
+      <div class="main-col">
+        <section>
+          <h2>Deneyim</h2>
+          <ul>
+            <li><strong>Freelance Yazılım Geliştirici</strong> (Eylül 2021 – Günümüz) — Remote • C++/.NET, SQL, e-ticaret
+              backend’leri, PHP, API’ler, küçük masaüstü araçlar</li>
+            <li><strong>Bilgisayar Programcısı / Software Developer</strong> (Temmuz 2020 – Eylül 2021) — Roivision • C#
+              (.NET) &amp; SQL</li>
+            <li><strong>Satınalma Sorumlusu / Store Assistant</strong> (Aralık 2017 – Şubat 2020) — Speedspor • E-ticaret
+            </li>
+            <li><strong>Bilgi Teknolojileri Görevlisi</strong> (Ocak 2013 – Haziran 2014) — IBM • Zorunlu staj • IT
+              Departmanı</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Yetenekler</h2>
+          <ul>
+            <li><strong>Diller / Frameworkler:</strong> PHP, SQL, JavaScript, HTML/CSS, C++, C#, Unity, Godot</li>
+            <li><strong>Araçlar:</strong> Git, VS Code, XAMPP</li>
+            <li><strong>Kavramlar:</strong> OOP, REST, Stored Procedures, Optimizasyon, Test</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Eğitim</h2>
+          <ul>
+            <li><strong>Kavram Meslek Yüksekokulu</strong> — Bilgisayar Programcılığı (Ön Lisans) • 2014 – 2016 • Not Ort.:
+              3.04 / 4</li>
+            <li><strong>Kadıköy Mesleki ve Teknik Anadolu Lisesi</strong> — Bilgisayar Programcılığı • 2014</li>
+          </ul>
+        </section>
+
+
+        <section>
+          <h2>Projeler</h2>
+          <p class="muted">Seçili projelerim — sade ve bağlamı ile birlikte.</p>
+          <div id="projects" class="projects"></div>
+        </section>
+      </div>
+
+      <aside class="side-col">
+        <section>
+          <h2>Sertifikalar</h2>
+          <div class="cert">
+            <div class="image-area">
+              <img src="img/n5.jpeg" alt="JLPT N3 Sertifikası">
+            </div>
+            <div class="cert-desc">
+              <strong>JLPT Sertifikası (Resmi Belge)</strong>
+              <p>Japonca yeterlilik sınavında JLPT resmi sonuç belgem mevcuttur.</p>
             </div>
           </div>
 
-          <div class="row">
-            <div>
-              <b>Müsaitlik</b><br />
-              <small>Serbest (freelance) ve uzaktan sözleşmeli işler için müsait</small>
+          <div class="cert">
+            <div class="image-area">
+              <img src="img/pc.jpeg" alt="SmartPro IT Eğitimi">
+            </div>
+            <div class="cert-desc">
+              <strong>Bilgi Teknolojileri Eğitimi (SmartPro)</strong>
+              <p>SmartPro Eğitim Kurumu’nda bilgi teknolojileri ve bilgisayar kullanımı üzerine eğitim aldım.</p>
             </div>
           </div>
+        </section>
 
-          <div class="row">
-            <div>
-              <b>Uzmanlıklar</b><br />
-              <small>Ölçeklenebilir API'ler · SQL performansı · Sistem tasarımı</small>
+        <section>
+          <h2>Diller</h2>
+          <div class="languages" aria-label="Diller ve yetkinlik">
+            <div class="lang">
+              <div class="lang-info"><strong>İngilizce</strong><span class="muted">• İleri (4/5)</span></div>
+              <div class="level-boxes" role="img" aria-label="İngilizce seviye: 4 üzerinden 5">
+                <span class="box filled" aria-hidden="true"></span>
+                <span class="box filled" aria-hidden="true"></span>
+                <span class="box filled" aria-hidden="true"></span>
+                <span class="box filled" aria-hidden="true"></span>
+                <span class="box" aria-hidden="true"></span>
+              </div>
             </div>
-          </div>
 
-          <div class="row">
-            <div>
-              <b>Deneyim</b><br />
-              <small>Üretim servisleri geliştirmede 3+ yıl deneyim</small>
+            <div class="lang">
+              <div class="lang-info"><strong>Japonca</strong><span class="muted">• JLPT N3 (Orta — 3/5)</span></div>
+              <div class="level-boxes" role="img" aria-label="Japonca seviye: 3 üzerinden 5">
+                <span class="box filled" aria-hidden="true"></span>
+                <span class="box filled" aria-hidden="true"></span>
+                <span class="box filled" aria-hidden="true"></span>
+                <span class="box" aria-hidden="true"></span>
+                <span class="box" aria-hidden="true"></span>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       </aside>
-    </section>
-
-    <!-- PROJELER -->
-    <section id="projects" aria-label="Projeler">
-      <h2>Projeler</h2>
-      <div class="grid">
-        <article class="card project">
-          <h3>MyEcommercePhp</h3>
-          <p>Yönetici araçları, kupon sistemi, kargo mantığı ve kullanıcı yorumları içeren e-ticaret platformu.</p>
-          <div class="links"><a href="#">GitHub</a> · <a href="#">Canlı</a> · <a href="#">Vaka İncelemesi</a></div>
-          <div class="tags">
-            <span class="tag">PHP</span>
-            <span class="tag">MySQL</span>
-            <span class="tag">Saklı Prosedürler</span>
-          </div>
-        </article>
-
-        <article class="card project">
-          <h3>Email Monitor</h3>
-          <p>Birden fazla posta kutusunu izleyen ve yeni mesajlarda bildirim gönderen masaüstü uygulaması.</p>
-          <div class="links"><a href="#">GitHub</a></div>
-          <div class="tags">
-            <span class="tag">Python</span>
-            <span class="tag">IMAP</span>
-          </div>
-        </article>
-
-        <article class="card project">
-          <h3>Coverage Cleaner</h3>
-          <p>Chrome kapsam raporlarından yalnızca kullanılan kodu çıkarıp optimize eden araç.</p>
-          <div class="links"><a href="#">GitHub</a></div>
-          <div class="tags">
-            <span class="tag">Python</span>
-            <span class="tag">Otomasyon</span>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section id="skills" aria-label="Yetenekler">
-      <h2>Yetenekler</h2>
-      <div class="two-col">
-        <div class="card">
-          <p><b>Backend</b><br />PHP, MySQL, Saklı Prosedürler, REST API'ler, Kimlik Doğrulama, Doğrulama</p>
-        </div>
-        <div class="card">
-          <p><b>Frontend</b><br />HTML, CSS, JavaScript, Bootstrap, duyarlı arayüz (responsive)</p>
-        </div>
-        <div class="card" style="grid-column: 1 / -1;">
-          <p><b>Araçlar</b><br />Git/GitHub, Postman, Temel Linux, Temel dağıtım (deployment)</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- EXPERIENCE -->
-    <section id="experience" aria-label="Deneyim">
-      <h2>Deneyim</h2>
-      <div class="card">
-        <div class="list">
-          <div class="row">
-            <div>
-              <b>Kişisel / Serbest Projeler</b><br />
-              <small>E-ticaret, masaüstü yardımcı uygulamalar ve oyun prototipleri için özellikler geliştirildi.</small>
-            </div>
-            <small>2023–2025</small>
-          </div>
-          <div class="row">
-            <div>
-              <b>Önceki Rol (Opsiyonel)</b><br />
-              <small>Bunu gerçek işinizi/stajınızı ve 1–2 sonucu ile değiştirin.</small>
-            </div>
-            <small>Yıl</small>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" aria-label="İletişim">
-      <h2>İletişim</h2>
-      <div class="card">
-        <p><b>E-posta:</b> <a href="mailto:kayatarkan96@gmail.com">kayatarkan96@gmail.com</a></p>
-        <p><b>GitHub:</b> <a href="https://github.com/betsunohito">github.com/betsunohito</a></p>
-        <p><b>LinkedIn:</b> <a href="https://linkedin.com/in/tarkan-kaya">linkedin.com/in/tarkan-kaya</a></p>
-      </div>
-    </section>
+    </div>
 
     <footer>
-      © <span id="y"></span> Tarkan Kaya
+      <div>© <span id="year"></span> Tarkan Kaya</div>
     </footer>
   </main>
 
+  <div class="image-overlay" id="imageOverlay" aria-hidden="true">
+    <button class="overlay-btn overlay-prev" aria-label="Önceki">‹</button>
+    <img src="" alt="Büyütülmüş görsel" class="overlay-img" />
+    <button class="overlay-btn overlay-next" aria-label="Sonraki">›</button>
+    <div class="overlay-counter" aria-hidden="true"></div>
+  </div>
   <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
+    // ====== Burayı düzenle: projelerini ekle ======
+    // Görselleri index.html ile aynı klasöre koy (örn: project-1.jpg) veya tam yol ver.
+    const PROJECTS = [
+      {
+        name: "MyEcommercePhp",
+        image: "project-myecommercephp.jpg",
+        description: "PHP ve MySQL ile geliştirilmiş e-ticaret platformu. Veri akışı ve stored procedure odaklı backend kurgusu.",
+        tags: ["PHP", "MySQL", "Stored Procedures", "E-ticaret"],
+        year: 2025,
+        links: {
+          github: "https://github.com/betsunohito/MyEcommercePhp",
+          demo: ""
+        }
+      },
+      {
+        name: "Same File Finder",
+        image: "img/samefile/1736606314940.gif",
+        freezeGif: true,
+        description: "Klasör içindeki dosyaları bayt seviyesinde karşılaştırarak benzer veya tamamen aynı dosyaları tespit eden C++ WinAPI aracı.",
+        tags: ["C++", "WinAPI", "Masaüstü"],
+        year: 2025,
+        links: {
+          github: "https://github.com/betsunohito/SameFileFinder",
+          demo: ""
+        }
+      },
+
+      {
+        name: "Coverage Cleaner",
+        // multiple images for animated gallery (put files under img/coverage/)
+        images: [
+          "img/coverage/1742326570196.jpg",
+          "img/coverage/1742326570313.jpg",
+          "img/coverage/1742326570864.jpg"
+        ],
+        description: "Chrome Coverage JSON çıktısını işleyip yalnızca kullanılan kodlardan yeni dosyalar üreten Python aracı.",
+        tags: ["Python", "Araç"],
+        year: 2025,
+        links: {
+          github: "https://github.com/betsunohito/CoverageCleaner",
+          demo: ""
+        }
+      },
+      {
+        name: "MyShortcuts",
+        image: "img/shortcut/1742408091925.jpg",
+        description: "Mozilla Firefox eklentisi: bağlantıları hızlıca kaydetme ve düzenleme.",
+        tags: ["Firefox", "Eklenti", "JavaScript"],
+        year: 2025,
+        links: {
+          github: "https://github.com/betsunohito/myShortcuts",
+          demo: ""
+        }
+      }
+      // Yeni proje eklerken yukarıdaki nesne yapısını kopyala.
+    ];
+
+    // ====== Render (framework yok) ======
+    const els = {
+      list: document.getElementById('projects'),
+      year: document.getElementById('year'),
+    };
+
+    els.year.textContent = new Date().getFullYear();
+
+    function escapeHtml(s) {
+      return String(s)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function renderProjects(items) {
+      if (!Array.isArray(items) || items.length === 0) {
+        els.list.innerHTML = '<p class="muted">Henüz proje eklenmedi.</p>';
+        return;
+      }
+
+      // Yeni -> eski (yıla göre), sonra isme göre
+      const sorted = items.slice().sort(
+        (a, b) => (b.year || 0) - (a.year || 0) || (a.name || '').localeCompare(b.name || '')
+      );
+
+      els.list.innerHTML = sorted.map(p => {
+        const name = escapeHtml(p.name || 'İsimsiz Proje');
+        const desc = escapeHtml(p.description || '');
+
+        // Not: Tag'leri göstermek istemezsen, aşağıdaki tagLine satırını boş bırakabiliriz.
+        const tagLine = Array.isArray(p.tags) && p.tags.length
+          ? `<p class="muted">${escapeHtml(p.tags.join(' • '))}</p>`
+          : '';
+
+        const github = p.links?.github
+          ? `<a href="${p.links.github}" target="_blank" rel="noreferrer">GitHub</a>`
+          : '';
+
+        const demo = p.links?.demo
+          ? `<a href="${p.links.demo}" target="_blank" rel="noreferrer">Canlı</a>`
+          : '';
+
+        const year = p.year ? `<span class="muted">• ${escapeHtml(p.year)}</span>` : '';
+        const links = (github || demo || year)
+          ? `<div class="links">${[github, demo].filter(Boolean).join('')}${year}</div>`
+          : '';
+
+        const imgMarkup = Array.isArray(p.images) && p.images.length
+          ? `
+            <div class="animated-gallery" aria-hidden="true" data-interval="3500">
+              ${p.images.map(src => `<img src="${escapeHtml(src)}" class="floating-img" loading="lazy"/>`).join('')}
+              <div class="slide-progress" aria-hidden="true"><div class="bar"></div></div>
+            </div>
+          `
+          : (p.freezeGif
+            ? `<img src="${escapeHtml(p.image || '')}" alt="${name} ekran görüntüsü" loading="lazy" class="freeze-gif" onerror="this.removeAttribute('src'); this.setAttribute('alt','Görsel bulunamadı');" />`
+            : `<img src="${escapeHtml(p.image || '')}" alt="${name} ekran görüntüsü" loading="lazy" onerror="this.removeAttribute('src'); this.setAttribute('alt','Görsel bulunamadı');" />`
+          );
+
+        return `
+          <figure class="project">
+            ${imgMarkup}
+            <div>
+              <h3>${name}</h3>
+              <p>${desc}</p>
+              ${tagLine}
+              ${links}
+            </div>
+          </figure>
+        `; 
+      }).join('');
+    }
+
+    // ====== Minimal testler (UI'ı bozmaz, konsola yazar) ======
+    (function tests() {
+      console.assert(Array.isArray(PROJECTS), 'PROJECTS bir dizi (array) olmalı');
+      console.assert(els.list instanceof HTMLElement, '#projects elementi bulunamadı');
+      console.assert(els.year instanceof HTMLElement, '#year elementi bulunamadı');
+
+      // Basit şema kontrolü
+      PROJECTS.forEach((p, i) => {
+        console.assert(p && typeof p === 'object', `PROJECTS[${i}] nesne olmalı`);
+        console.assert(typeof p.name === 'string', `PROJECTS[${i}].name string olmalı`);
+        console.assert(typeof p.image === 'string', `PROJECTS[${i}].image string olmalı`);
+        console.assert(typeof p.description === 'string', `PROJECTS[${i}].description string olmalı`);
+        console.assert(typeof p.year === 'number', `PROJECTS[${i}].year number olmalı`);
+      });
+    })();
+
+    renderProjects(PROJECTS);
+
+    // Render sonrası test
+    (function testsAfterRender() {
+      const count = els.list.querySelectorAll('figure.project').length;
+      console.assert(count === PROJECTS.length || PROJECTS.length === 0, 'Render edilen proje sayısı uyuşmuyor');
+    })();
+    // After projects render: initialize animated galleries as crossfade slideshows with progress bar
+    (function initAnimatedGalleries() {
+      const galleries = document.querySelectorAll('.animated-gallery');
+
+      galleries.forEach((g) => {
+        const imgs = Array.from(g.querySelectorAll('img.floating-img'));
+        const progressBar = g.querySelector('.slide-progress .bar');
+        const intervalMs = Number(g.dataset.interval) || 3500;
+        if (!imgs.length || !progressBar) return;
+
+        let current = 0;
+        imgs.forEach((img, i) => {
+          img.style.opacity = i === 0 ? '1' : '0';
+          img.classList.toggle('active', i === 0);
+        });
+
+        // State for progress animation
+        let raf = null;
+        let startTs = null;
+        let paused = false;
+        let elapsed = 0;
+
+        function startProgress(ms) {
+          // start from elapsed (ms may be provided for resume)
+          startTs = performance.now();
+          cancelled = false;
+          function step(now) {
+            if (paused) { startTs += (performance.now() - now); raf = requestAnimationFrame(step); return; }
+            const dt = now - startTs + (ms || 0);
+            const perc = Math.min(dt / intervalMs, 1);
+            progressBar.style.width = (perc * 100) + '%';
+            if (dt >= intervalMs) {
+              // advance slide
+              next();
+              return;
+            }
+            raf = requestAnimationFrame(step);
+          }
+          raf = requestAnimationFrame(step);
+        }
+
+        function stopProgress() {
+          if (raf) { cancelAnimationFrame(raf); raf = null; }
+        }
+
+        function resetProgress() {
+          progressBar.style.width = '0%';
+          elapsed = 0;
+        }
+
+        function next() {
+          stopProgress();
+          imgs[current].classList.remove('active');
+          imgs[current].style.opacity = '0';
+          current = (current + 1) % imgs.length;
+          imgs[current].classList.add('active');
+          imgs[current].style.opacity = '1';
+          resetProgress();
+          // start again
+          startProgress(0);
+        }
+
+        // Pause / resume on hover
+        g.addEventListener('mouseenter', () => {
+          paused = true;
+          // compute elapsed so far
+          const w = parseFloat(getComputedStyle(progressBar).width || 0);
+          const total = parseFloat(getComputedStyle(progressBar.parentElement).width || 1);
+          elapsed = (w / Math.max(total,1)) * intervalMs;
+          stopProgress();
+        });
+
+        g.addEventListener('mouseleave', () => {
+          paused = false;
+          // resume from elapsed
+          startProgress(elapsed);
+        });
+
+        // start initial loop
+        resetProgress();
+        startProgress(0);
+      });
+    })();
+
+    // Freeze animated GIFs into a static canvas snapshot
+    (function freezeGifImages() {
+      const gifs = document.querySelectorAll('img.freeze-gif');
+      gifs.forEach(img => {
+        // avoid double-processing
+        if (img.dataset.frozen) return;
+        const src = img.src;
+        // fetch blob and draw to canvas (first frame)
+        fetch(src).then(r => r.blob()).then(blob => createImageBitmap(blob)).then(bitmap => {
+          const canvas = document.createElement('canvas');
+          canvas.width = bitmap.width;
+          canvas.height = bitmap.height;
+          canvas.className = 'frozen-gif';
+          const ctx = canvas.getContext('2d');
+          // draw at native resolution; CSS will scale to fit container
+          ctx.drawImage(bitmap, 0, 0);
+          if (img.alt) canvas.setAttribute('aria-label', img.alt);
+          img.replaceWith(canvas);
+        }).catch((err) => {
+          // if something fails, leave the original GIF
+          console.warn('Could not freeze gif', src, err);
+        });
+        img.dataset.frozen = '1';
+      });
+    })();
+
+    // ✅ Overlay referansları (gelişmiş)
+    const overlay = document.getElementById('imageOverlay');
+    const overlayImg = overlay.querySelector('.overlay-img');
+    const overlayPrev = overlay.querySelector('.overlay-prev');
+    const overlayNext = overlay.querySelector('.overlay-next');
+    const overlayCounter = overlay.querySelector('.overlay-counter');
+
+    let currentItems = [];
+    let currentIndex = 0;
+    let pausedGallery = null;
+
+    function showOverlayAt(idx) {
+      currentIndex = (idx + currentItems.length) % currentItems.length;
+      overlayImg.src = currentItems[currentIndex].src || '';
+      overlayCounter.textContent = `${currentIndex + 1} / ${currentItems.length}`;
+      overlayPrev.style.display = currentItems.length > 1 ? 'flex' : 'none';
+      overlayNext.style.display = currentItems.length > 1 ? 'flex' : 'none';
+      overlay.style.display = 'flex';
+      overlay.setAttribute('aria-hidden', 'false');
+      document.addEventListener('keydown', onOverlayKey);
+    }
+
+    function closeOverlay() {
+      overlay.style.display = 'none';
+      overlay.setAttribute('aria-hidden', 'true');
+      overlayImg.src = '';
+      overlayCounter.textContent = '';
+      document.removeEventListener('keydown', onOverlayKey);
+      if (pausedGallery) {
+        pausedGallery.dispatchEvent(new Event('mouseleave'));
+        pausedGallery = null;
+      }
+    }
+
+    function onOverlayKey(e) {
+      if (e.key === 'Escape') return closeOverlay();
+      if (e.key === 'ArrowLeft') return currentItems.length > 1 && showOverlayAt(currentIndex - 1);
+      if (e.key === 'ArrowRight') return currentItems.length > 1 && showOverlayAt(currentIndex + 1);
+    }
+
+    overlayPrev.addEventListener('click', (ev) => { ev.stopPropagation(); showOverlayAt(currentIndex - 1); });
+    overlayNext.addEventListener('click', (ev) => { ev.stopPropagation(); showOverlayAt(currentIndex + 1); });
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeOverlay();
+    });
+
+    // Open overlay for a clicked element (img or canvas)
+    function openOverlayFromElement(el) {
+      if (!el) return;
+
+      // If inside an animated gallery, use that set
+      const gallery = el.closest('.animated-gallery');
+      if (gallery) {
+        const imgs = Array.from(gallery.querySelectorAll('img.floating-img'));
+        currentItems = imgs.map(i => ({ type: 'img', src: i.src }));
+        pausedGallery = gallery;
+        // pause the gallery (simulate hover)
+        gallery.dispatchEvent(new Event('mouseenter'));
+        const index = imgs.indexOf(el);
+        showOverlayAt(index >= 0 ? index : 0);
+        return;
+      }
+
+      // Otherwise use images/canvases inside the project figure (or just the clicked element)
+      const project = el.closest('figure.project');
+      if (project) {
+        const nodes = Array.from(project.querySelectorAll('img, canvas'));
+        currentItems = nodes.map(n => {
+          if (n.tagName === 'IMG') return { type: 'img', src: n.src };
+          if (n.tagName === 'CANVAS') return { type: 'canvas', src: n.toDataURL() };
+          return null;
+        }).filter(Boolean);
+        const idx = nodes.indexOf(el);
+        showOverlayAt(idx >= 0 ? idx : 0);
+        return;
+      }
+
+      // Fallback: single element (e.g., certificate image)
+      if (el.tagName === 'IMG') {
+        currentItems = [{ type: 'img', src: el.src }];
+        showOverlayAt(0);
+      } else if (el.tagName === 'CANVAS') {
+        currentItems = [{ type: 'canvas', src: el.toDataURL() }];
+        showOverlayAt(0);
+      }
+    }
+
+    // Delegate clicks: handle project images, gallery slides, frozen canvas, and certificate images
+    document.addEventListener('click', (e) => {
+      const el = e.target.closest('img, canvas');
+      if (!el) return;
+      if (el.closest('figure.project') || el.closest('.image-area') || el.closest('.animated-gallery')) {
+        openOverlayFromElement(el);
+      }
+    });
+
+
   </script>
 </body>
 
