@@ -427,6 +427,22 @@ footer {
 }
 
 /* Chat widget styles */
+.chat-instructions {
+  position: fixed;
+  right: 18px;
+  bottom: 64px;
+  z-index: 10140;
+  max-width: 320px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: right;
+  background: rgba(255,255,255,0.9);
+  padding: 8px 10px;
+  border-radius: 8px;
+  border:1px solid var(--line);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.06);
+}
+@media (max-width:600px){ .chat-instructions{ max-width: 86vw; right: 7vw; bottom: 80px; text-align:left; } }
 .chat-toggle {
   position: fixed;
   right: 18px;
