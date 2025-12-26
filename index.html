@@ -141,13 +141,57 @@
     </footer>
   </main>
 
-  <!-- Socket.IO chat example: floating button + chat templates -->
-  <button id="openChatBtn" class="chat-toggle" aria-label="Socket.IO örneği">Socket.IO örneği</button>
+  <!-- Chat örneği (sunucusuz moda uygun) -->
+  <button id="openChatBtn" class="chat-toggle" aria-label="Chat örneği">Chat örneği</button>
   <div id="chatContainer" aria-live="polite"></div>
 
-  <script src="/socket.io/socket.io.js"></script>
   <script>
     (function () {
+      // Transport abstraction: BroadcastChannel (preferred) or localStorage fallback — serverless by default
+      const Transport = {
+        mode: 'init', // 'socket' | 'bc' | 'ls'
+        sock: null,
+        bc: null,
+        bus: new EventTarget(),
+        async init() {
+          // Serverless-first: BroadcastChannel (modern browsers), fallback to localStorage events. No server dependency.
+          if (typeof BroadcastChannel !== 'undefined') {
+            this.mode = 'bc';
+            this.bc = new BroadcastChannel('portfolio-chat');
+            this.bc.onmessage = (ev) => { this.bus.dispatchEvent(new CustomEvent('message', { detail: ev.data })); };
+            return;
+          }
+
+          // Fallback to localStorage events (older browsers)
+          this.mode = 'ls';
+          window.addEventListener('storage', (e) => {
+            if (e.key === 'portfolio-chat' && e.newValue) {
+              try {
+                const data = JSON.parse(e.newValue);
+                this.bus.dispatchEvent(new CustomEvent('message', { detail: data }));
+              } catch (err) { }
+            }
+          });
+        },
+        // Note: Socket.IO and server-related loading removed to keep this repo GitHub Pages friendly.
+        send(msg) {
+          msg.id = msg.id || (Date.now() + '-' + Math.random().toString(36).slice(2,6));
+          msg.ts = msg.ts || Date.now();
+          if (this.mode === 'socket' && this.sock) {
+            this.sock.emit('chat:message', msg);
+          } else if (this.mode === 'bc' && this.bc) {
+            try { this.bc.postMessage(msg); } catch (e) { console.warn('bc.postMessage failed', e); }
+          } else {
+            try { localStorage.setItem('portfolio-chat', JSON.stringify(msg)); } catch (e) { }
+            // dispatch locally so same-tab widgets also get it
+            this.bus.dispatchEvent(new CustomEvent('message', { detail: msg }));
+          }
+        },
+        on(fn) { this.bus.addEventListener('message', (e) => fn(e.detail)); }
+      };
+
+      const transportReady = Transport.init().then(() => Transport).catch((e) => { console.warn('Transport init failed', e); return Transport; });
+
       function createEl(tag, cls, txt) { const e = document.createElement(tag); if (cls) e.className = cls; if (txt) e.textContent = txt; return e; }
       let widgetCount = 0;
       const container = document.getElementById('chatContainer');
@@ -155,8 +199,25 @@
       class ChatWidget {
         constructor() {
           this.id = 'c-' + Date.now() + '-' + Math.random().toString(36).slice(2,6);
-          this.socket = io();
+          this.transport = null;
+          this.seenIds = new Set(); // for deduplication of incoming messages
+          this.pending = []; // queue messages if transport not ready yet
           this.build();
+
+          transportReady.then((t) => {
+            this.transport = t;
+            this.transport.on((m) => this.addMessage(m));
+            this.addSystem('İletişim modu: ' + (t.mode === 'bc' ? 'BroadcastChannel (Sunucusuz)' : 'localStorage (Sunucusuz)'));
+            // flush pending messages
+            while (this.pending.length) {
+              const pm = this.pending.shift();
+              try { this.transport.send(pm); } catch (e) { console.warn('send pending failed', e); }
+            }
+          }).catch((err) => {
+            this.addSystem('Taşıyıcı başlatılamadı');
+            console.warn('transportReady failed', err);
+          });
+
           this.bind();
         }
         build() {
@@ -166,7 +227,7 @@
           widgetCount++;
           this.el.innerHTML = `
             <header class="chat-header">
-              <strong>Socket.IO — Örnek</strong>
+              <strong>Chat — Örnek</strong>
               <div class="chat-controls">
                 <button class="mini" title="Yeni sohbet">+</button>
                 <button class="close" title="Kapat">×</button>
@@ -190,7 +251,6 @@
           this.el.querySelector('.chat-controls .mini').addEventListener('click', () => openNewWidget());
         }
         bind() {
-          this.socket.on('chat:message', (m) => this.addMessage(m));
           this.form.addEventListener('submit', (e) => { e.preventDefault(); this.send(); });
           this.el.querySelector('.chat-send').addEventListener('click', () => this.send());
         }
@@ -198,32 +258,59 @@
           const name = (this.nameInput.value || 'Anon').trim();
           const text = (this.msgInput.value || '').trim();
           if (!text) return;
-          this.socket.emit('chat:message', { name, text, clientId: this.id });
+
+          // Ensure message has an id and timestamp immediately so we can deduplicate and show it locally
+          const msg = { id: Date.now() + '-' + Math.random().toString(36).slice(2,6), ts: Date.now(), name, text, clientId: this.id };
+
+          // Always show local echo immediately (addMessage will deduplicate and record id)
+          this.addMessage(msg);
+
+          // Try to send now; if transport isn't ready, queue it
+          if (this.transport) {
+            try { this.transport.send(msg); } catch (e) { this.addSystem('Gönderme hatası'); console.warn(e); }
+          } else {
+            this.pending.push(msg);
+            this.addSystem('Mesaj sıraya alındı — bağlantı bekleniyor');
+          }
+
           this.msgInput.value = '';
         }
         addMessage(m) {
+          if (!m || typeof m !== 'object') return;
+          // Deduplicate by message id when possible
+          if (m.id) {
+            if (this.seenIds.has(m.id)) return;
+            this.seenIds.add(m.id);
+          }
+
           const li = document.createElement('li');
           li.className = 'chat-msg' + (m.clientId === this.id ? ' me' : '');
-          const name = document.createElement('div'); name.className = 'meta'; name.textContent = m.name;
-          const txt = document.createElement('div'); txt.className = 'text'; txt.textContent = m.text;
+          const name = document.createElement('div'); name.className = 'meta'; name.textContent = m.name || 'Anon';
+          const txt = document.createElement('div'); txt.className = 'text'; txt.textContent = m.text || '';
           li.appendChild(name); li.appendChild(txt);
           this.messagesEl.appendChild(li);
           this.messagesEl.scrollTop = this.messagesEl.scrollHeight;
         }
+        addSystem(text) {
+          const li = document.createElement('li');
+          li.className = 'chat-msg system';
+          li.textContent = text;
+          this.messagesEl.appendChild(li);
+          this.messagesEl.scrollTop = this.messagesEl.scrollHeight;
+        }
         destroy() {
-          this.socket.disconnect();
           this.el.remove();
           widgetCount = Math.max(0, widgetCount - 1);
         }
       }
 
-      function openNewWidget() {
+      async function openNewWidget() {
         new ChatWidget();
       }
 
-      document.getElementById('openChatBtn').addEventListener('click', () => {
+      document.getElementById('openChatBtn').addEventListener('click', async () => {
         const any = container.querySelector('.chat-widget');
-        if (!any) openNewWidget();
+        if (!any) await openNewWidget();
         else {
           const last = container.querySelector('.chat-widget:last-child');
           last.style.display = last.style.display === 'none' ? 'flex' : 'none';
