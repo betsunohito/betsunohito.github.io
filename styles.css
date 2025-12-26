@@ -485,6 +485,14 @@ footer {
   margin-bottom: 12px;
   position: relative;
 }
+.chat-instructions {
+  display: none;
+}
+.chat-instructions.show {
+  display: block;
+}
+/* autoChat modunda asla gösterme */
+html.auto-chat .chat-instructions { display: none !important; }
 .chat-header { display:flex; justify-content:space-between; align-items:center; gap:8px; padding:4px 6px; font-weight:700; }
 .chat-controls button{ background:transparent; border:none; font-size:18px; cursor:pointer; color:var(--muted); padding:4px; border-radius:6px; }
 .chat-messages{ list-style:none; margin:0; padding:8px; height:180px; overflow:auto; display:flex; flex-direction:column; gap:8px; background:#fbfcfd; border-radius:6px; border:1px solid rgba(0,0,0,0.03); }
