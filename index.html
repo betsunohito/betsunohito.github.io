@@ -145,7 +145,15 @@
 
   <!-- Chat örneği (sunucusuz moda uygun) -->
   <button id="openChatBtn" class="chat-toggle" aria-label="Chat örneği">Chat örneği</button>
-  <div class="chat-instructions" aria-hidden="true">Socket.IO örneğinde olduğu gibi test etmek için: <strong>yeni bir tarayıcı sekmesi açın</strong> ve aynı sayfayı yükleyin. Her iki sekmede de <strong>"Chat örneği"</strong> butonuna tıklayıp sohbet penceresi açın; bir sekmeden gönderilen mesaj hem gönderende hem diğer sekmede görünmelidir. (Aynı sekmede birden fazla pencere açmak için widget içindeki <strong>+</strong> düğmesini kullanabilirsiniz.)</div>
+  <div class="chat-instructions" aria-hidden="true">
+    <div>Socket.IO örneğinde olduğu gibi test etmek için:</div>
+    <div><strong>Yeni bir tarayıcı sekmesi açın</strong> ve aynı sayfayı yükleyin; sonra her iki sekmede de <strong>"Chat örneği"</strong> butonuna tıklayarak sohbet penceresi açın. Gönderilen mesaj her iki tarafta görünmelidir.</div>
+    <div class="chat-instructions-actions">
+      <button id="openTestTab" class="mini-btn">Aç & Test Et (Yeni Sekme)</button>
+      <button id="copyTestLink" class="mini-btn">Bağlantıyı Kopyala</button>
+    </div>
+    <div class="chat-instructions-note">Not: Sunucusuz mod yalnızca aynı tarayıcı/same-origin sekmeler arasında çalışır; farklı cihazlarda çalışması için sunucu gereklidir.</div>
+  </div>
   <div id="chatContainer" aria-live="polite"></div>
 
   <script>
@@ -319,6 +327,34 @@
           last.style.display = last.style.display === 'none' ? 'flex' : 'none';
         }
       });
+
+      // Open a new tab that auto-opens a chat widget to simplify testing
+      const openBtn = document.getElementById('openTestTab');
+      const copyBtn = document.getElementById('copyTestLink');
+      if (openBtn) openBtn.addEventListener('click', () => {
+        const url = location.origin + location.pathname + (location.search ? location.search + '&autoChat=1' : '?autoChat=1');
+        window.open(url, '_blank');
+      });
+      if (copyBtn) copyBtn.addEventListener('click', async () => {
+        const url = location.origin + location.pathname + (location.search ? location.search + '&autoChat=1' : '?autoChat=1');
+        try { await navigator.clipboard.writeText(url); alert('Bağlantı kopyalandı: ' + url); } catch (e) { prompt('Kopyalayın:', url); }
+      });
+
+      // Auto-open widget if URL param is present (makes the opened test tab behave like a second user)
+      try {
+        const params = new URLSearchParams(location.search);
+        if (params.get('autoChat')) {
+          // wait briefly so UI can initialize
+          setTimeout(() => {
+            openNewWidget();
+            const last = container.querySelector('.chat-widget:last-child');
+            if (last) {
+              const input = last.querySelector('.chat-input');
+              if (input) input.focus();
+            }
+          }, 200);
+        }
+      } catch (err) { /* ignore URL parsing errors */ }
 
     })();
   </script>
