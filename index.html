@@ -141,6 +141,98 @@
     </footer>
   </main>
 
+  <!-- Socket.IO chat example: floating button + chat templates -->
+  <button id="openChatBtn" class="chat-toggle" aria-label="Socket.IO örneği">Socket.IO örneği</button>
+  <div id="chatContainer" aria-live="polite"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    (function () {
+      function createEl(tag, cls, txt) { const e = document.createElement(tag); if (cls) e.className = cls; if (txt) e.textContent = txt; return e; }
+      let widgetCount = 0;
+      const container = document.getElementById('chatContainer');
+
+      class ChatWidget {
+        constructor() {
+          this.id = 'c-' + Date.now() + '-' + Math.random().toString(36).slice(2,6);
+          this.socket = io();
+          this.build();
+          this.bind();
+        }
+        build() {
+          this.el = document.createElement('div');
+          this.el.className = 'chat-widget';
+          this.el.style.right = (20 + widgetCount * 320) + 'px';
+          widgetCount++;
+          this.el.innerHTML = `
+            <header class="chat-header">
+              <strong>Socket.IO — Örnek</strong>
+              <div class="chat-controls">
+                <button class="mini" title="Yeni sohbet">+</button>
+                <button class="close" title="Kapat">×</button>
+              </div>
+            </header>
+            <ul class="chat-messages" role="log" aria-live="polite"></ul>
+            <form class="chat-form" action="#" onsubmit="return false;">
+              <input class="chat-name" placeholder="İsim" aria-label="İsim" value="Anon" maxlength="32"/>
+              <div class="chat-input-row">
+                <input class="chat-input" placeholder="Mesaj..." aria-label="Mesaj" />
+                <button class="chat-send">Gönder</button>
+              </div>
+            </form>
+          `;
+          container.appendChild(this.el);
+          this.messagesEl = this.el.querySelector('.chat-messages');
+          this.nameInput = this.el.querySelector('.chat-name');
+          this.msgInput = this.el.querySelector('.chat-input');
+          this.form = this.el.querySelector('.chat-form');
+          this.el.querySelector('.chat-controls .close').addEventListener('click', () => this.destroy());
+          this.el.querySelector('.chat-controls .mini').addEventListener('click', () => openNewWidget());
+        }
+        bind() {
+          this.socket.on('chat:message', (m) => this.addMessage(m));
+          this.form.addEventListener('submit', (e) => { e.preventDefault(); this.send(); });
+          this.el.querySelector('.chat-send').addEventListener('click', () => this.send());
+        }
+        send() {
+          const name = (this.nameInput.value || 'Anon').trim();
+          const text = (this.msgInput.value || '').trim();
+          if (!text) return;
+          this.socket.emit('chat:message', { name, text, clientId: this.id });
+          this.msgInput.value = '';
+        }
+        addMessage(m) {
+          const li = document.createElement('li');
+          li.className = 'chat-msg' + (m.clientId === this.id ? ' me' : '');
+          const name = document.createElement('div'); name.className = 'meta'; name.textContent = m.name;
+          const txt = document.createElement('div'); txt.className = 'text'; txt.textContent = m.text;
+          li.appendChild(name); li.appendChild(txt);
+          this.messagesEl.appendChild(li);
+          this.messagesEl.scrollTop = this.messagesEl.scrollHeight;
+        }
+        destroy() {
+          this.socket.disconnect();
+          this.el.remove();
+          widgetCount = Math.max(0, widgetCount - 1);
+        }
+      }
+
+      function openNewWidget() {
+        new ChatWidget();
+      }
+
+      document.getElementById('openChatBtn').addEventListener('click', () => {
+        const any = container.querySelector('.chat-widget');
+        if (!any) openNewWidget();
+        else {
+          const last = container.querySelector('.chat-widget:last-child');
+          last.style.display = last.style.display === 'none' ? 'flex' : 'none';
+        }
+      });
+
+    })();
+  </script>
+
   <div class="image-overlay" id="imageOverlay" aria-hidden="true">
     <button class="overlay-btn overlay-prev" aria-label="Önceki">‹</button>
     <img src="" alt="Büyütülmüş görsel" class="overlay-img" />
