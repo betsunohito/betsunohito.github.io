@@ -284,7 +284,6 @@
           this.msgInput = this.el.querySelector('.chat-input');
           this.form = this.el.querySelector('.chat-form');
           this.el.querySelector('.chat-controls .close').addEventListener('click', () => this.destroy());
-          this.el.querySelector('.chat-controls .mini').addEventListener('click', () => openNewWidget());
         }
         bind() {
           this.form.addEventListener('submit', (e) => { e.preventDefault(); this.send(); });
