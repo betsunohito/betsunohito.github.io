@@ -164,8 +164,9 @@
     </div>
 
     <footer>
-      <div>© <span id="year"></span> Tarkan Kaya</div>
+      <div>© Tarkan Kaya</div>
     </footer>
+
   </main>
 
   <!-- Chat örneği (sunucusuz moda uygun) -->
@@ -441,7 +442,6 @@
         ],
         description: "PHP ve MySQL ile geliştirilmiş e-ticaret platformu. Veri akışı ve stored procedure odaklı backend kurgusu.",
         tags: ["PHP", "MySQL", "Stored Procedures", "E-ticaret"],
-        year: 2025,
         links: {
           github: "https://github.com/tarkankaya/MyEcommercePhp",
           documentation: "https://raw.githubusercontent.com/tarkankaya/MyEcommercePhp/main/myecommercedocument.pdf",
@@ -459,7 +459,6 @@
         ],
         description: "Klasör içindeki dosyaları bayt seviyesinde karşılaştırarak benzer veya tamamen aynı dosyaları tespit eden C++ WinAPI aracı.",
         tags: ["C++", "WinAPI", "Masaüstü"],
-        year: 2025,
         links: {
           github: "https://github.com/tarkankaya/SameFileFinder",
           demo: ""
@@ -476,7 +475,6 @@
         ],
         description: "Chrome Coverage JSON çıktısını işleyip yalnızca kullanılan kodlardan yeni dosyalar üreten Python aracı.",
         tags: ["Python", "Araç"],
-        year: 2025,
         links: {
           github: "https://github.com/tarkankaya/CoverageCleaner",
           demo: ""
@@ -487,7 +485,6 @@
         image: "img/shortcut/1742408091925.jpg",
         description: "Mozilla Firefox eklentisi: bağlantıları hızlıca kaydetme ve düzenleme.",
         tags: ["Firefox", "Eklenti", "JavaScript"],
-        year: 2025,
         links: {
           github: "https://github.com/tarkankaya/myShortcuts",
           demo: ""
@@ -499,10 +496,8 @@
     // ====== Render (framework yok) ======
     const els = {
       list: document.getElementById('projects'),
-      year: document.getElementById('year'),
     };
 
-    els.year.textContent = new Date().getFullYear();
 
     function escapeHtml(s) {
       return String(s)
@@ -513,80 +508,75 @@
         .replaceAll("'", '&#39;');
     }
 
-    function renderProjects(items) {
-      if (!Array.isArray(items) || items.length === 0) {
-        els.list.innerHTML = '<p class="muted">Henüz proje eklenmedi.</p>';
-        return;
-      }
+function renderProjects(items) {
+  if (!Array.isArray(items) || items.length === 0) {
+    els.list.innerHTML = '<p class="muted">Henüz proje eklenmedi.</p>';
+    return;
+  }
 
-      // Yeni -> eski (yıla göre), sonra isme göre
-      const sorted = items.slice().sort(
-        (a, b) => (b.year || 0) - (a.year || 0) || (a.name || '').localeCompare(b.name || '')
+  // İstersen alfabetik sırala (yıl yoksa en temizi)
+  const sorted = items.slice().sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+
+  els.list.innerHTML = sorted.map(p => {
+    const name = escapeHtml(p.name || 'İsimsiz Proje');
+    const desc = escapeHtml(p.description || '');
+
+    const titleMarkup = p.links?.github
+      ? `<h3><a href="${p.links.github}" target="_blank" rel="noreferrer">${name}</a></h3>`
+      : `<h3>${name}</h3>`;
+
+    const tagLine = Array.isArray(p.tags) && p.tags.length
+      ? `<p class="muted">${escapeHtml(p.tags.join(' • '))}</p>`
+      : '';
+
+    const github = p.links?.github
+      ? `<a href="${p.links.github}" target="_blank" rel="noreferrer">GitHub</a>`
+      : '';
+
+    const doc = p.links?.documentation
+      ? `<a class="doc-btn" href="${p.links.documentation}" target="_blank" rel="noreferrer">Dokümantasyon</a>`
+      : '';
+
+    const demo = p.links?.demo
+      ? `<a href="${p.links.demo}" target="_blank" rel="noreferrer">Canlı</a>`
+      : '';
+
+    const linksArr = [github, doc, demo].filter(Boolean);
+    const links = linksArr.length
+      ? `<div class="links">${linksArr.join('<span class="sep">·</span>')}</div>`
+      : '';
+
+    const imgMarkup = Array.isArray(p.images) && p.images.length
+      ? `
+        <div class="animated-gallery" aria-hidden="true" data-interval="3500">
+          ${p.images.map(src => `<img src="${escapeHtml(src)}" class="floating-img" loading="lazy"/>`).join('')}
+          <div class="slide-progress" aria-hidden="true"><div class="bar"></div></div>
+        </div>
+      `
+      : (p.freezeGif
+        ? `<img src="${escapeHtml(p.image || '')}" alt="${name} ekran görüntüsü" loading="lazy" class="freeze-gif" onerror="this.removeAttribute('src'); this.setAttribute('alt','Görsel bulunamadı');" />`
+        : `<img src="${escapeHtml(p.image || '')}" alt="${name} ekran görüntüsü" loading="lazy" onerror="this.removeAttribute('src'); this.setAttribute('alt','Görsel bulunamadı');" />`
       );
 
-      els.list.innerHTML = sorted.map(p => {
-        const name = escapeHtml(p.name || 'İsimsiz Proje');
-        const desc = escapeHtml(p.description || '');
-        const titleMarkup = p.links?.github
-          ? `<h3><a href="${p.links.github}" target="_blank" rel="noreferrer">${name}</a></h3>`
-          : `<h3>${name}</h3>`;
+    return `
+      <figure class="project">
+        ${imgMarkup}
+        <div>
+          ${titleMarkup}
+          <p>${desc}</p>
+          ${tagLine}
+          ${links}
+        </div>
+      </figure>
+    `;
+  }).join('');
+}
 
-        // Not: Tag'leri göstermek istemezsen, aşağıdaki tagLine satırını boş bırakabiliriz.
-        const tagLine = Array.isArray(p.tags) && p.tags.length
-          ? `<p class="muted">${escapeHtml(p.tags.join(' • '))}</p>`
-          : '';
-
-        const github = p.links?.github
-          ? `<a href="${p.links.github}" target="_blank" rel="noreferrer">GitHub</a>`
-          : '';
-
-        const demo = p.links?.demo
-          ? `<a href="${p.links.demo}" target="_blank" rel="noreferrer">Canlı</a>`
-          : '';
-        const doc = p.links?.documentation
-          ? `<a class="doc-btn" href="${p.links.documentation}" target="_blank" rel="noreferrer">Dokümantasyon</a>`
-          : '';
-
-
-        const year = p.year ? `<span class="muted">• ${escapeHtml(p.year)}</span>` : '';
-        const linksArr = [github, doc, demo].filter(Boolean);
-        const links = (linksArr.length || year)
-          ? `<div class="links">${linksArr.join('<span class="sep">·</span>')}${year}</div>`
-          : '';
-
-
-
-        const imgMarkup = Array.isArray(p.images) && p.images.length
-          ? `
-            <div class="animated-gallery" aria-hidden="true" data-interval="3500">
-              ${p.images.map(src => `<img src="${escapeHtml(src)}" class="floating-img" loading="lazy"/>`).join('')}
-              <div class="slide-progress" aria-hidden="true"><div class="bar"></div></div>
-            </div>
-          `
-          : (p.freezeGif
-            ? `<img src="${escapeHtml(p.image || '')}" alt="${name} ekran görüntüsü" loading="lazy" class="freeze-gif" onerror="this.removeAttribute('src'); this.setAttribute('alt','Görsel bulunamadı');" />`
-            : `<img src="${escapeHtml(p.image || '')}" alt="${name} ekran görüntüsü" loading="lazy" onerror="this.removeAttribute('src'); this.setAttribute('alt','Görsel bulunamadı');" />`
-          );
-
-        return `
-          <figure class="project">
-            ${imgMarkup}
-            <div>
-              ${titleMarkup}
-              <p>${desc}</p>
-              ${tagLine}
-              ${links}
-            </div>
-          </figure>
-        `;
-      }).join('');
-    }
 
     // ====== Minimal testler (UI'ı bozmaz, konsola yazar) ======
     (function tests() {
       console.assert(Array.isArray(PROJECTS), 'PROJECTS bir dizi (array) olmalı');
       console.assert(els.list instanceof HTMLElement, '#projects elementi bulunamadı');
-      console.assert(els.year instanceof HTMLElement, '#year elementi bulunamadı');
 
       // Basit şema kontrolü
       PROJECTS.forEach((p, i) => {
@@ -594,7 +584,6 @@
         console.assert(typeof p.name === 'string', `PROJECTS[${i}].name string olmalı`);
         console.assert(typeof p.image === 'string' || (Array.isArray(p.images) && p.images.length > 0), `PROJECTS[${i}].image veya images olmalı`);
         console.assert(typeof p.description === 'string', `PROJECTS[${i}].description string olmalı`);
-        console.assert(typeof p.year === 'number', `PROJECTS[${i}].year number olmalı`);
       });
     })();
 
