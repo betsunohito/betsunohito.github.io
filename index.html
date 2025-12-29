@@ -263,13 +263,12 @@
           this.el.style.right = (20 + widgetCount * 320) + 'px';
           widgetCount++;
           this.el.innerHTML = `
-            <header class="chat-header">
+            <div class="chat-header">
               <strong>Chat — Örnek</strong>
               <div class="chat-controls">
-                <button class="mini" title="Yeni sohbet">+</button>
                 <button class="close" title="Kapat">×</button>
               </div>
-            </header>
+            </div>
             <ul class="chat-messages" role="log" aria-live="polite"></ul>
             <form class="chat-form" action="#" onsubmit="return false;">
               <input class="chat-name" placeholder="İsim" aria-label="İsim" value="Anon" maxlength="32"/>
