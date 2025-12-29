@@ -544,8 +544,9 @@
           ? `<a href="${p.links.demo}" target="_blank" rel="noreferrer">Canlı</a>`
           : '';
         const doc = p.links?.documentation
-          ? `<a href="${p.links.documentation}" target="_blank" rel="noreferrer">Dokümantasyon</a>`
+          ? `<a class="doc-btn" href="${p.links.documentation}" target="_blank" rel="noreferrer">Dokümantasyon</a>`
           : '';
+
 
         const year = p.year ? `<span class="muted">• ${escapeHtml(p.year)}</span>` : '';
         const linksArr = [github, doc, demo].filter(Boolean);

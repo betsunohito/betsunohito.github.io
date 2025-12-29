@@ -367,6 +367,34 @@ footer {
 .links .sep{
   opacity:.6;
 }
+/* Dokümantasyon butonu: daha belli */
+.doc-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  background: var(--accent);
+  color:#fff !important;
+  font-weight:700;
+  box-shadow: 0 10px 22px rgba(31,79,216,.25);
+  border:1px solid rgba(255,255,255,.2);
+  transform: translateY(-1px);
+}
+
+.doc-btn:hover{
+  text-decoration:none;
+  filter: brightness(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(31,79,216,.33);
+}
+
+/* İstersen küçük ikon da ekleyelim */
+.doc-btn::before{
+  content:"📄";
+  font-size: 1.05em;
+  line-height:1;
+}
 
 /* Fullscreen image overlay */
 .image-overlay {
