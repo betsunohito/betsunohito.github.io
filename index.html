@@ -506,57 +506,56 @@
         .replaceAll("'", '&#39;');
     }
 
-function renderProjects(items) {
-  if (!Array.isArray(items) || items.length === 0) {
-    els.list.innerHTML = '<p class="muted">Henüz proje eklenmedi.</p>';
-    return;
-  }
+    function renderProjects(items) {
+      if (!Array.isArray(items) || items.length === 0) {
+        els.list.innerHTML = '<p class="muted">Henüz proje eklenmedi.</p>';
+        return;
+      }
 
-  // İstersen alfabetik sırala (yıl yoksa en temizi)
-  const sorted = items.slice().sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+      // İstersen alfabetik sırala (yıl yoksa en temizi)
+      const sorted = items.slice().sort((a, b) => (a.name || '').localeCompare(b.name || ''));
 
-  els.list.innerHTML = sorted.map(p => {
-    const name = escapeHtml(p.name || 'İsimsiz Proje');
-    const desc = escapeHtml(p.description || '');
+      els.list.innerHTML = sorted.map(p => {
+        const name = escapeHtml(p.name || 'İsimsiz Proje');
+        const desc = escapeHtml(p.description || '');
 
-    const titleMarkup = p.links?.github
-      ? `<h3><a href="${p.links.github}" target="_blank" rel="noreferrer">${name}</a></h3>`
-      : `<h3>${name}</h3>`;
+        const titleMarkup = p.links?.github
+          ? `<h3><a href="${p.links.github}" target="_blank" rel="noreferrer">${name}</a></h3>`
+          : `<h3>${name}</h3>`;
 
-    const tagLine = Array.isArray(p.tags) && p.tags.length
-      ? `<p class="muted">${escapeHtml(p.tags.join(' • '))}</p>`
-      : '';
+        const tagLine = Array.isArray(p.tags) && p.tags.length
+          ? `<p class="muted">${escapeHtml(p.tags.join(' • '))}</p>`
+          : '';
 
-    const github = p.links?.github
-      ? `<a href="${p.links.github}" target="_blank" rel="noreferrer">GitHub</a>`
-      : '';
+        const github = p.links?.github
+          ? `<a href="${p.links.github}" target="_blank" rel="noreferrer">GitHub</a>`
+          : '';
 
-    const doc = p.links?.documentation
-      ? `<a class="doc-btn" href="${p.links.documentation}" target="_blank" rel="noreferrer">Dokümantasyon</a>`
-      : '';
+        const doc = p.links?.documentation
+          ? `<a class="doc-btn" href="${p.links.documentation}" target="_blank" rel="noreferrer">Dokümantasyon</a>`
+          : '';
 
-    const demo = p.links?.demo
-      ? `<a href="${p.links.demo}" target="_blank" rel="noreferrer">Canlı</a>`
-      : '';
+        const demo = p.links?.demo
+          ? `<a href="${p.links.demo}" target="_blank" rel="noreferrer">Canlı</a>`
+          : '';
 
-    const linksArr = [github, doc, demo].filter(Boolean);
-    const links = linksArr.length
-      ? `<div class="links">${linksArr.join('<span class="sep">·</span>')}</div>`
-      : '';
+        const linksArr = [github, doc, demo].filter(Boolean);
+        const links = linksArr.length
+          ? `<div class="links">${linksArr.join('<span class="sep">·</span>')}</div>`
+          : '';
 
-    const imgMarkup = Array.isArray(p.images) && p.images.length
-      ? `
-        <div class="animated-gallery" aria-hidden="true" data-interval="3500">
-          ${p.images.map(src => `<img src="${escapeHtml(src)}" class="floating-img" loading="lazy"/>`).join('')}
-          <div class="slide-progress" aria-hidden="true"><div class="bar"></div></div>
-        </div>
-      `
-      : (p.freezeGif
-        ? `<img src="${escapeHtml(p.image || '')}" alt="${name} ekran görüntüsü" loading="lazy" class="freeze-gif" onerror="this.removeAttribute('src'); this.setAttribute('alt','Görsel bulunamadı');" />`
-        : `<img src="${escapeHtml(p.image || '')}" alt="${name} ekran görüntüsü" loading="lazy" onerror="this.removeAttribute('src'); this.setAttribute('alt','Görsel bulunamadı');" />`
-      );
+        const imgMarkup = Array.isArray(p.images) && p.images.length
+          ? `
+    <div class="animated-gallery" aria-hidden="true" data-interval="3500">
+      ${p.images.map(src => `<img src="${escapeHtml(src)}" class="floating-img" loading="lazy"/>`).join('')}
+      <div class="slide-progress" aria-hidden="true"><div class="bar"></div></div>
+    </div>
+  `
+          : `<img src="${escapeHtml(p.image || '')}" alt="${name} ekran görüntüsü" loading="lazy"
+        onerror="this.removeAttribute('src'); this.setAttribute('alt','Görsel bulunamadı');" />`;
 
-    return `
+
+        return `
       <figure class="project">
         ${imgMarkup}
         <div>
@@ -567,8 +566,8 @@ function renderProjects(items) {
         </div>
       </figure>
     `;
-  }).join('');
-}
+      }).join('');
+    }
 
 
     // ====== Minimal testler (UI'ı bozmaz, konsola yazar) ======
@@ -679,31 +678,6 @@ function renderProjects(items) {
       });
     })();
 
-    // Freeze animated GIFs into a static canvas snapshot
-    (function freezeGifImages() {
-      const gifs = document.querySelectorAll('img.freeze-gif');
-      gifs.forEach(img => {
-        // avoid double-processing
-        if (img.dataset.frozen) return;
-        const src = img.src;
-        // fetch blob and draw to canvas (first frame)
-        fetch(src).then(r => r.blob()).then(blob => createImageBitmap(blob)).then(bitmap => {
-          const canvas = document.createElement('canvas');
-          canvas.width = bitmap.width;
-          canvas.height = bitmap.height;
-          canvas.className = 'frozen-gif';
-          const ctx = canvas.getContext('2d');
-          // draw at native resolution; CSS will scale to fit container
-          ctx.drawImage(bitmap, 0, 0);
-          if (img.alt) canvas.setAttribute('aria-label', img.alt);
-          img.replaceWith(canvas);
-        }).catch((err) => {
-          // if something fails, leave the original GIF
-          console.warn('Could not freeze gif', src, err);
-        });
-        img.dataset.frozen = '1';
-      });
-    })();
 
     // ✅ Overlay referansları (gelişmiş)
     const overlay = document.getElementById('imageOverlay');

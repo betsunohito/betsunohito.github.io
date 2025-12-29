@@ -296,15 +296,6 @@ footer {
   opacity: 1;
 }
 
-/* Frozen GIF canvas */
-.frozen-gif {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
-  border-radius: 6px;
-  object-fit: cover;
-  /* doesn't apply to canvas but kept for consistency */
-}
 
 /* Slide progress indicator */
 .slide-progress {
