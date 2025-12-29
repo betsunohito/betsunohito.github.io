@@ -353,6 +353,20 @@ footer {
   flex-wrap: wrap;
   font-size: 14px;
 }
+.links{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.links a{
+  font-weight:600;
+}
+
+.links .sep{
+  opacity:.6;
+}
 
 /* Fullscreen image overlay */
 .image-overlay {

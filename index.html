@@ -443,8 +443,8 @@
         tags: ["PHP", "MySQL", "Stored Procedures", "E-ticaret"],
         year: 2025,
         links: {
-          github: "https://github.com/betsunohito/MyEcommercePhp",
-          documentation: "https://objects.githubusercontent.com/github-production-repository-file-5c1aeb/1055190586/22286144?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20251229%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20251229T142719Z&X-Amz-Expires=300&X-Amz-Signature=9e3da317bddb4baf26f1679cec3f2a3101cbfdc99e35a80adcebe9bfe2d17689&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3Bfilename%3Dmyecommercedocument.pdf&response-content-type=application%2Fpdf",
+          github: "https://github.com/tarkankaya/MyEcommercePhp",
+          documentation: "https://raw.githubusercontent.com/tarkankaya/MyEcommercePhp/main/myecommercedocument.pdf",
           demo: ""
         }
       },
@@ -461,7 +461,7 @@
         tags: ["C++", "WinAPI", "Masaüstü"],
         year: 2025,
         links: {
-          github: "https://github.com/betsunohito/SameFileFinder",
+          github: "https://github.com/tarkankaya/SameFileFinder",
           demo: ""
         }
       },
@@ -478,7 +478,7 @@
         tags: ["Python", "Araç"],
         year: 2025,
         links: {
-          github: "https://github.com/betsunohito/CoverageCleaner",
+          github: "https://github.com/tarkankaya/CoverageCleaner",
           demo: ""
         }
       },
@@ -489,7 +489,7 @@
         tags: ["Firefox", "Eklenti", "JavaScript"],
         year: 2025,
         links: {
-          github: "https://github.com/betsunohito/myShortcuts",
+          github: "https://github.com/tarkankaya/myShortcuts",
           demo: ""
         }
       }
@@ -543,11 +543,17 @@
         const demo = p.links?.demo
           ? `<a href="${p.links.demo}" target="_blank" rel="noreferrer">Canlı</a>`
           : '';
+        const doc = p.links?.documentation
+          ? `<a href="${p.links.documentation}" target="_blank" rel="noreferrer">Dokümantasyon</a>`
+          : '';
 
         const year = p.year ? `<span class="muted">• ${escapeHtml(p.year)}</span>` : '';
-        const links = (github || demo || year)
-          ? `<div class="links">${[github, demo].filter(Boolean).join('')}${year}</div>`
+        const linksArr = [github, doc, demo].filter(Boolean);
+        const links = (linksArr.length || year)
+          ? `<div class="links">${linksArr.join('<span class="sep">·</span>')}${year}</div>`
           : '';
+
+
 
         const imgMarkup = Array.isArray(p.images) && p.images.length
           ? `
