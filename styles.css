@@ -35,8 +35,6 @@ header {
   padding-bottom: 28px;
   border-bottom: 1px solid var(--line);
 }
-.img-link { display: block; }
-.img-link:link, .img-link:visited { text-decoration: none; color: inherit; }
 
 .profile {
   width: 96px;
